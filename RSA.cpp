@@ -12,6 +12,7 @@ long long p, q, n1, n2, e, d;
 int arr[su];
 string m;
 vector<long long> c;
+vector<long long> slv;
 
 void PrimeNumber_maker() {
     arr[0] = -1;
@@ -40,8 +41,15 @@ void PrimeNumber_maker() {
         }
     }
 
-    cout << p << " " << q << " " ;
+    cout<<"p: " << p << "  q: " << q << " \n" ;
 
+}
+
+long long pw(long long x, long long y, long long z){
+    for(long long i=0;i<y;i++){
+        x=(x*x)%z;
+    }
+    return x;
 }
 
 void key_maker() {
@@ -63,31 +71,48 @@ void key_maker() {
     }
 
     //d 구하기
-    cout << e << " " ;
+    cout <<"value of e: " << e << "\n" ;
     while((e*(rand()+1))%su!=1){
         d=(rand()+1)%su;
     }
-    cout << d << " " ;
+    cout <<"value of d: "<< d << "\n\n" ;
 }
 
-
+//암호화
 void encryption() {
     for(int i=0;i<m.size();i++){
-        long long val=(long long)pow((long long)m[i], e)%n1;
+        int val=pw((int)m[i], e, n1);
         c.push_back(val);
     }
+    cout << "the sentences are being encrypted\n";
     for(int i=0;i<c.size();i++){
-        cout <<c[i] << " ";
+        cout << c[i] << " ";
+    }cout <<"\n\n";
+}
+
+//복호화
+void decryption(){
+    for(int i=0;i<(char)c.size();i++){
+        int val=pw((int)c[i], d, n1);
+        slv.push_back(val);
     }
+    cout << "the sentences are being decrypted\n";
+    for(int i=0;i<slv.size();i++){
+        cout << slv[i] << " ";
+    }cout <<"\n\n";
 }
 
 int main()
 {
     cout << "put sentence\n";
     cin >> m;
+    for(int i=0;i<m.size();i++){
+        cout << (int)m[i] <<" ";
+    }cout << "\n";
     PrimeNumber_maker();
     key_maker();
     encryption();
+    decryption();
 
 
 }
